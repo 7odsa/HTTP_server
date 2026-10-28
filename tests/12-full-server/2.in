@@ -1,0 +1,14 @@
+GET / HTTP/1.1
+Host: a.test
+
+GET /user-agent HTTP/1.1
+Host: a.test
+User-Agent: Mozilla/5.0
+
+GET /echo/hello%20world?x=1 HTTP/1.1
+Host: a.test
+
+GET /missing HTTP/1.1
+Host: a.test
+Connection: close
+

@@ -1,0 +1,19 @@
+*.example.com wc1
+*.a.example.com wc2
+www.example.com www
+
+GET / HTTP/1.1
+Host: x.a.example.com
+
+GET / HTTP/1.1
+Host: x.b.example.com
+
+GET / HTTP/1.1
+Host: a.example.com
+
+GET / HTTP/1.1
+Host: www.example.com
+
+GET / HTTP/1.1
+Host: example.com
+

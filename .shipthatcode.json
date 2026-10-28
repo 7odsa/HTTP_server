@@ -1,0 +1,74 @@
+{
+  "course": "build-http-server",
+  "language": "python",
+  "language_id": 1071,
+  "entrypoint": "main.py",
+  "version": 1,
+  "content_hash": "98430ba6f331bbed",
+  "lessons": [
+    {
+      "slug": "request-line",
+      "tests_hash": "b285f7e8e7fb"
+    },
+    {
+      "slug": "request-headers",
+      "tests_hash": "66e6c40a3c27"
+    },
+    {
+      "slug": "request-body",
+      "tests_hash": "f5487e817013"
+    },
+    {
+      "slug": "build-response",
+      "tests_hash": "5509d53ae089"
+    },
+    {
+      "slug": "static-routing",
+      "tests_hash": "385a19bd07dc"
+    },
+    {
+      "slug": "path-params",
+      "tests_hash": "94acec640156"
+    },
+    {
+      "slug": "keep-alive",
+      "tests_hash": "2215259c2544"
+    },
+    {
+      "slug": "concurrency",
+      "tests_hash": "4aa589968be5"
+    },
+    {
+      "slug": "static-files",
+      "tests_hash": "b4ae8a6e7772"
+    },
+    {
+      "slug": "errors",
+      "tests_hash": "a294f819141b"
+    },
+    {
+      "slug": "logging",
+      "tests_hash": "b6433ff7ba4e"
+    },
+    {
+      "slug": "full-server",
+      "tests_hash": "212027f83390"
+    },
+    {
+      "slug": "etags",
+      "tests_hash": "e877e10caa28"
+    },
+    {
+      "slug": "range-requests",
+      "tests_hash": "5cedbd173890"
+    },
+    {
+      "slug": "virtual-hosting",
+      "tests_hash": "3a32e09cdd9c"
+    },
+    {
+      "slug": "websocket-upgrade",
+      "tests_hash": "cee5b78fb283"
+    }
+  ]
+}

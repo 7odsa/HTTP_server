@@ -1,0 +1,15 @@
+GET /a HTTP/1.1
+Host: a.test
+Connection: Keep-Alive, Upgrade
+
+GET /b HTTP/1.0
+Host: a.test
+Connection: Keep-Alive, Upgrade
+
+GET /c HTTP/1.1
+Host: a.test
+connection:  CLOSE 
+
+GET /d HTTP/1.1
+Host: a.test
+

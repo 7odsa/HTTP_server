@@ -1,0 +1,15 @@
+GET / HTTP/1.1
+Host: a.test
+
+GET / HTTP/1.1
+Host: a.test
+
+GET / HTTP/1.1
+Host: a.test
+
+GET / HTTP/1.1
+Host: a.test
+
+GET /never HTTP/1.1
+Host: a.test
+

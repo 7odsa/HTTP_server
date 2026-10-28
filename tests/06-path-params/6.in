@@ -1,0 +1,8 @@
+GET /users/{id} get_user
+GET /users/{id}/posts/{post} get_post
+GET /search search
+
+GET /users HTTP/1.1
+GET /users/42/posts HTTP/1.1
+GET /users/42/posts/7/extra HTTP/1.1
+GET /search/more HTTP/1.1

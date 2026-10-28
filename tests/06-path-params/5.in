@@ -1,0 +1,7 @@
+GET /users/{id} get_user
+GET /users/{id}/posts/{post} get_post
+GET /search search
+
+GET /search?q=hello%20world&page=2 HTTP/1.1
+GET /search?z=1&a=2&m=3 HTTP/1.1
+GET /search HTTP/1.1

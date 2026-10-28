@@ -1,0 +1,9 @@
+GET /api/users list_users
+POST /api/users create_user
+HEAD /health health_head
+GET /health health
+GET /about about
+
+PUT /api/users HTTP/1.1
+GET /api/users?page=2&sort=desc HTTP/1.1
+POST /api/users HTTP/1.1

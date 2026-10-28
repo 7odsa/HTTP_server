@@ -1,0 +1,9 @@
+GET /items/{id} get_item
+DELETE /items/{id} del_item
+POST /items create_item
+
+PUT /items/7 HTTP/1.1
+POST /items/7 HTTP/1.1
+GET /items HTTP/1.1
+GET /other HTTP/1.1
+DELETE /items/7 HTTP/1.1

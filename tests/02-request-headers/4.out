@@ -1,0 +1,3 @@
+host: example.com
+referer: http://example.com/page?a=1:2
+x-spaced: two  inner   spaces

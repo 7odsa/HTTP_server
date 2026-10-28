@@ -1,0 +1,7 @@
+GET /a/{x}/c ac
+GET /a/b/{y} ab
+GET /a/{x}/{z} generic
+
+GET /a/b/c HTTP/1.1
+GET /a/q/c HTTP/1.1
+GET /a/q/r HTTP/1.1

@@ -1,0 +1,6 @@
+ETAG "a1b2"
+LASTMOD Tue, 15 Nov 2022 12:00:00 GMT
+GET /app.css HTTP/1.1
+Host: a.test
+If-None-Match: "different"
+

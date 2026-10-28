@@ -1,0 +1,10 @@
+GET / index
+GET /about about
+POST /login login
+GET /api/users list_users
+
+GET / HTTP/1.1
+GET /about?ref=footer HTTP/1.1
+POST /login HTTP/1.1
+GET /missing HTTP/1.1
+DELETE / HTTP/1.1

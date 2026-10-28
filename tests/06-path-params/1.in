@@ -1,0 +1,8 @@
+GET /users/{id} get_user
+GET /users/{id}/posts/{post} get_post
+GET /search search
+
+GET /users/42 HTTP/1.1
+GET /users/alice/posts/abc-123 HTTP/1.1
+GET /search?q=cron&limit=10 HTTP/1.1
+GET /users/ HTTP/1.1

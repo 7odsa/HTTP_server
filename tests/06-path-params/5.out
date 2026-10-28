@@ -1,0 +1,3 @@
+search ?page="2" ?q="hello world"
+search ?a="2" ?m="3" ?z="1"
+search

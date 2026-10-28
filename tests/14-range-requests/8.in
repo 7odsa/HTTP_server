@@ -1,0 +1,6 @@
+SIZE 1000
+GET /archive.zip HTTP/1.1
+Host: a.test
+Accept: */*
+Range: bytes=999-999
+

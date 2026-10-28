@@ -1,0 +1,3 @@
+GET /search search
+
+GET /search?q=hello+world&tag=a%26b&empty=&bare&q=second HTTP/1.1

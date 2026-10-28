@@ -1,0 +1,3 @@
+/var/www|/..%2f..%2fetc%2fpasswd
+/var/www|/%2e%2e/%2e%2e/etc/passwd
+/var/www|/%2E%2E%2Fetc/shadow

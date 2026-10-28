@@ -1,0 +1,5 @@
+/var/www/photo.PNG|image/png
+/var/www/logo.svg|image/svg+xml
+/var/www/notes.txt|text/plain; charset=utf-8
+/var/www/pic.jpeg|image/jpeg
+/var/www/anim.gif|image/gif

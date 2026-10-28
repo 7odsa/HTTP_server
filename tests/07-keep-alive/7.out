@@ -1,0 +1,3 @@
+1 GET /a KEEP
+2 GET /b KEEP
+3 GET /c CLOSE

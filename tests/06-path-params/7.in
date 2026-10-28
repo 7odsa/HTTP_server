@@ -1,0 +1,5 @@
+GET /files/{name} get_file
+
+GET /files/a%2Fb.txt HTTP/1.1
+GET /files/a/b.txt HTTP/1.1
+GET /files/report%20final.pdf HTTP/1.1

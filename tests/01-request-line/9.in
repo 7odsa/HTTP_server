@@ -1,0 +1,3 @@
+GET / HTTP/2.0
+GET / HTTP/1.2
+GET / HTTP/0.9

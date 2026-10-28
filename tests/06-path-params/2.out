@@ -1,0 +1,4 @@
+new_user_form
+get_user :id="42"
+edit_user :id="new"
+edit_user :id="7"

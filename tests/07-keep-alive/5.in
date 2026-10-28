@@ -1,0 +1,9 @@
+POST /a HTTP/1.1
+Host: a.test
+Content-Length: 26
+
+GET /smuggled HTTP/1.1
+
+GET /b HTTP/1.1
+Host: a.test
+

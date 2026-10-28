@@ -1,0 +1,4 @@
+206 Partial Content
+Accept-Ranges: bytes
+Content-Range: bytes 900-999/1000
+Content-Length: 100

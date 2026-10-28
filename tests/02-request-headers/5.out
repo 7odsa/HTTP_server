@@ -1,0 +1,3 @@
+host: a.example
+accept: text/html, application/json, */*
+x-tag: one, two

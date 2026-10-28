@@ -1,0 +1,10 @@
+blog.example.com blog
+*.example.com wildcard
+shop.example.com shop
+
+GET / HTTP/1.1
+Host: blog.example.com.
+
+GET / HTTP/1.1
+Host: Shop.Example.COM.:443
+

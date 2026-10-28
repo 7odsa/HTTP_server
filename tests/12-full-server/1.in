@@ -1,0 +1,5 @@
+GET / HTTP/1.1
+Host: a.test
+User-Agent: curl/8.5.0
+Accept: */*
+

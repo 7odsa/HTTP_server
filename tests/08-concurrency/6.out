@@ -1,0 +1,7 @@
+STARTED 1
+REJECTED 4 503
+REJECTED 5 503
+free=0 busy=1 queued=2 done=0 rejected=2
+DONE 1
+STARTED 2
+free=0 busy=1 queued=1 done=1 rejected=2

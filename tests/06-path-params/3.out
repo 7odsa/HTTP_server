@@ -1,0 +1,3 @@
+ab :y="c"
+ac :x="q"
+generic :x="q" :z="r"

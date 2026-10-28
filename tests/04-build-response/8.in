@@ -1,0 +1,5 @@
+GET 405
+Allow: GET, HEAD
+Content-Type: text/plain
+
+Method Not Allowed

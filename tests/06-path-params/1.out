@@ -1,0 +1,4 @@
+get_user :id="42"
+get_post :id="alice" :post="abc-123"
+search ?limit="10" ?q="cron"
+404

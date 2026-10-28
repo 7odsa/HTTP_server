@@ -1,0 +1,6 @@
+blog.example.com blog
+*.example.com wildcard
+shop.example.com shop
+
+GET / HTTP/1.1
+

@@ -1,0 +1,9 @@
+GET / index
+GET /about about
+POST /login login
+GET /api/users list_users
+
+GET /ab%6Fut HTTP/1.1
+GET /%61bout?x=1 HTTP/1.1
+GET /api%2Fusers HTTP/1.1
+GET /%2561bout HTTP/1.1

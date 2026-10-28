@@ -1,0 +1,5 @@
+200 index
+200 about
+200 login
+404
+405 Allow: GET, HEAD

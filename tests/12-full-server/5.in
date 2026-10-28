@@ -1,0 +1,9 @@
+DELETE /echo HTTP/1.1
+Host: a.test
+
+PUT / HTTP/1.1
+Host: a.test
+
+POST /files/hello.txt HTTP/1.1
+Host: a.test
+

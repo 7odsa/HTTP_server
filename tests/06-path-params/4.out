@@ -1,0 +1,5 @@
+405 Allow: DELETE, GET
+405 Allow: DELETE, GET
+405 Allow: POST
+404
+del_item :id="7"

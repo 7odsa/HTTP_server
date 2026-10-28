@@ -1,0 +1,10 @@
+STARTED 1
+STARTED 2
+DONE 1
+DONE 2
+STARTED 3
+STARTED 4
+free=0 busy=2 queued=1 done=2 rejected=0
+DONE 3
+STARTED 5
+free=0 busy=2 queued=0 done=3 rejected=0

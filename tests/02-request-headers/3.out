@@ -1,0 +1,4 @@
+host: example.com
+content-type: text/html
+content-length: 0
+x-pad: tabbed

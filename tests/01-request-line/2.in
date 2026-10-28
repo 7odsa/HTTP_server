@@ -1,0 +1,2 @@
+POST /api/users HTTP/1.0
+GET /search?q=redis&page=2 HTTP/1.1

@@ -1,0 +1,3 @@
+/var/www|/../www-backup/secret.txt
+/var/www|/..
+/var/www|/a/../../www2/x.txt

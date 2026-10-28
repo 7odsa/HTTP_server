@@ -1,0 +1,9 @@
+[::1] local6
+localhost local
+_ fallback
+
+GET / HTTP/1.0
+
+GET / HTTP/1.0
+Host: localhost
+

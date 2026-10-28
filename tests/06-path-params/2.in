@@ -1,0 +1,9 @@
+GET /users/{id} get_user
+GET /users/new new_user_form
+GET /users/{id}/edit edit_user
+POST /users create_user
+
+GET /users/new HTTP/1.1
+GET /users/42 HTTP/1.1
+GET /users/new/edit HTTP/1.1
+GET /users/7/edit HTTP/1.1

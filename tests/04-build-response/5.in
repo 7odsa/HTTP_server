@@ -1,0 +1,5 @@
+POST 201
+Location: /notes/42
+Content-Type: application/json
+
+{"id":42}

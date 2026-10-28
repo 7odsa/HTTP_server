@@ -1,0 +1,4 @@
+Host: example.com
+Referer: http://example.com/page?a=1:2
+X-Spaced: two  inner   spaces
+

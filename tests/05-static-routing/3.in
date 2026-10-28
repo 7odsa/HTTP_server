@@ -1,0 +1,10 @@
+GET /api/users list_users
+POST /api/users create_user
+HEAD /health health_head
+GET /health health
+GET /about about
+
+HEAD /about HTTP/1.1
+HEAD /health HTTP/1.1
+HEAD /api/users HTTP/1.1
+HEAD /missing HTTP/1.1

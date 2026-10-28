@@ -1,0 +1,19 @@
+blog.example.com blog
+*.example.com wildcard
+shop.example.com shop
+
+GET / HTTP/1.1
+Host: blog.example.com
+
+GET / HTTP/1.1
+Host: shop.example.com:8080
+
+GET / HTTP/1.1
+Host: BLOG.EXAMPLE.COM
+
+GET / HTTP/1.1
+Host: other.example.com
+
+GET / HTTP/1.1
+Host: example.com
+
