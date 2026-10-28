@@ -1,66 +1,75 @@
 import sys
-
-supported_methods = {
-    "GET", "HEAD", "POST", "PUT",
-    "DELETE", "OPTIONS", "PATCH"
-}
+from judge_http_req import readAndManipulateHttpReq
 
 
-def judge(line):
-    if "\r" in line or "\n" in line:
-        return "400"
+TOKEN = set("!#$%&'*+-.^_`|~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
 
-    parts = line.split(" ")
 
-    if len(parts) != 3 or any(part == "" for part in parts):
-        return "400"
 
-    method, target, version = parts
+import sys
 
-    if any(c < "A" or c > "Z" for c in method):
-        return "400"
+TOKEN = set("!#$%&'*+-.^_`|~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
 
-    if target != "*" and not target.startswith("/"):
-        return "400"
 
-    if target == "*" and method != "OPTIONS":
-        return "400"
+def parse_headers(data):
+    pos = 0
+    names = []
+    values = {}
 
-    if any(ord(c) < 0x21 or ord(c) > 0x7e for c in target):
-        return "400"
+    while True:
+        end = data.find("\r\n", pos)
+        if end < 0:
+            return "400 incomplete"
 
-    if (
-        len(version) != 8
-        or not version.startswith("HTTP/")
-        or not ("0" <= version[5] <= "9")
-        or version[6] != "."
-        or not ("0" <= version[7] <= "9")
-    ):
-        return "400"
+        line = data[pos:end]
+        pos = end + 2
 
-    supported_methods = {
-        "GET", "HEAD", "POST", "PUT",
-        "DELETE", "OPTIONS", "PATCH"
-    }
+        if line == "":
+            break
 
-    if method not in supported_methods:
-        return "501"
+        if "\r" in line or "\n" in line:
+            return "400 line-ending"
 
-    if version not in ("HTTP/1.0", "HTTP/1.1"):
-        return "505"
+        if line.startswith((" ", "\t")):
+            return "400 fold"
 
-    return "OK " + line
+        if ":" not in line:
+            return "400 no-colon"
+
+        name, value = line.split(":", 1)
+
+        if not name or any(char not in TOKEN for char in name):
+            return "400 bad-name"
+
+        name = name.lower()
+        value = value.strip(" \t")
+
+        if name not in values:
+            names.append(name)
+            values[name] = []
+
+        values[name].append(value)
+
+    if len(values.get("host", [])) != 1:
+        return "400 host"
+
+    result = []
+    for name in names:
+        value = ", ".join(values[name])
+        if value:
+            result.append(f"{name}: {value}")
+        else:
+            result.append(f"{name}:")
+
+    return "\n".join(result)
+
+
+
+
 
 def main():
     # Read bytes, not text: text mode would rewrite \r\n as \n before you ever see it.
     data = sys.stdin.buffer.read().decode("latin-1")
-    pieces = data.split("\r\n")
-    tail = pieces.pop()  # whatever follows the last CRLF
-    out = [judge(p) for p in pieces]
-    if tail != "":
-        out.append("400")  # an unterminated fragment is a 400
-    for o in out:
-        sys.stdout.write(o + "\n")
-
+    sys.stdout.buffer.write((parse_headers(data) + "\n").encode("latin-1"))
 
 main()
