@@ -1,152 +1,82 @@
 import sys
 
-
-def esc(s):
-    """Escape for the body line: \\ \\r \\n \\t and non-printing bytes as \\xNN."""
-    out = []
-    for ch in s:
-        o = ord(ch)
-        if ch == "\\":
-            out.append("\\\\")
-        elif ch == "\r":
-            out.append("\\r")
-        elif ch == "\n":
-            out.append("\\n")
-        elif ch == "\t":
-            out.append("\\t")
-        elif o < 0x20 or o > 0x7E:
-            out.append("\\x%02x" % o)
-        else:
-            out.append(ch)
-    return "".join(out)
+REASONS = {
+    101: "Switching Protocols", 200: "OK", 201: "Created", 204: "No Content",
+    206: "Partial Content", 301: "Moved Permanently", 302: "Found", 304: "Not Modified",
+    400: "Bad Request", 401: "Unauthorized", 403: "Forbidden", 404: "Not Found",
+    405: "Method Not Allowed", 408: "Request Timeout", 411: "Length Required",
+    412: "Precondition Failed", 413: "Content Too Large", 414: "URI Too Long",
+    415: "Unsupported Media Type", 416: "Range Not Satisfiable", 426: "Upgrade Required",
+    431: "Request Header Fields Too Large", 500: "Internal Server Error",
+    501: "Not Implemented", 503: "Service Unavailable", 505: "HTTP Version Not Supported",
+}
 
 
-def read_headers(data):
-    """Returns (cl_values, te_values, body_start), or None when the header block never ends.
-    cl_values / te_values are the trimmed values of every Content-Length / Transfer-Encoding line."""
-    pos = 0
-    cl, te = [], []
+def parse_spec(data):
+    """data is the input as a str, one char per byte.
+    Returns (method, status, header_lines, body)."""
+    nl = data.find("\n")
+    first = data if nl < 0 else data[:nl]
+    rest = "" if nl < 0 else data[nl + 1:]
+    method, status = first.split(" ")
+    headers = []
     while True:
-        end = data.find("\r\n", pos)
-        if end < 0:
-            return None
-        line = data[pos:end]
-        pos = end + 2
+        nl = rest.find("\n")
+        if nl < 0:
+            line, rest = rest, ""
+        else:
+            line, rest = rest[:nl], rest[nl + 1:]
         if line == "":
-            return cl, te, pos
-        colon = line.find(":")
-        if colon < 0:
-            continue
-        name = line[:colon].lower()
-        value = line[colon + 1:].strip(" \t")
-        if name == "content-length":
-            cl.append(value)
-        elif name == "transfer-encoding":
-            te.append(value)
+            break
+        headers.append(line)
+    return method, int(status), headers, rest
 
 
-def decode(data):
-    hdr = read_headers(data)
+def render(method, status, headers, body):
+    """Return the exact wire bytes, as a str with one char per byte."""
 
-    if hdr is None:
-        return "400 truncated"
+    # 1. Remove existing Content-Length headers (case-insensitive)
+    filtered_headers = []
 
-    cl, te, pos = hdr
+    for header in headers:
+        name = header.split(":", 1)[0].strip()
 
-    if cl and te:
-        return "400 both"
+        if name.lower() != "content-length":
+            filtered_headers.append(header)
 
-    if te:
-        if len(te) != 1 or te[0].lower() != "chunked":
-            return "400 bad-encoding"
+    # 2. Determine whether this status code forbids a response body
+    no_body_status = (
+        100 <= status < 200
+        or status == 204
+        or status == 304
+    )
 
-        body_parts = []
+    if no_body_status:
+        body = ""
 
-        while True:
-            end = data.find("\r\n", pos)
+    # 3. Add the correct Content-Length when permitted
+    if not no_body_status:
+        filtered_headers.append(f"Content-Length: {len(body)}")
 
-            if end < 0:
-                return "400 truncated"
+    # 4. Build the status line and headers using CRLF
+    reason = REASONS.get(status, "Unknown")
+    status_line = f"HTTP/1.1 {status} {reason}"
 
-            size_line = data[pos:end]
-            pos = end + 2
+    response = "\r\n".join([status_line] + filtered_headers)
+    response += "\r\n\r\n"
 
-            size_text = size_line.split(";", 1)[0]
+    # 5. HEAD responses include headers but omit the body
+    if method != "HEAD":
+        response += body
 
-            if (
-                not size_text
-                or len(size_text) > 8
-                or any(ch not in "0123456789abcdefABCDEF"
-                       for ch in size_text)
-            ):
-                return "400 bad-chunk"
-
-            size = int(size_text, 16)
-
-            if size == 0:
-                while True:
-                    end = data.find("\r\n", pos)
-
-                    if end < 0:
-                        return "400 truncated"
-
-                    trailer = data[pos:end]
-                    pos = end + 2
-
-                    if trailer == "":
-                        body = "".join(body_parts)
-                        rest = len(data) - pos
-
-                        return (
-                            f'framing: chunked\n'
-                            f'body: "{esc(body)}"\n'
-                            f'rest: {rest}'
-                        )
-
-            if len(data) - pos < size:
-                return "400 truncated"
-
-            chunk = data[pos:pos + size]
-            pos += size
-
-            body_parts.append(chunk)
-
-            if data[pos:pos + 2] != "\r\n":
-                if len(data) - pos < 2:
-                    return "400 truncated"
-                return "400 bad-chunk"
-
-            pos += 2
-
-    if cl:
-        if not all(value.isdigit() for value in cl):
-            return "400 bad-length"
-
-        if len(set(cl)) != 1:
-            return "400 bad-length"
-
-        length = int(cl[0])
-        available = len(data) - pos
-
-        if length > available:
-            return "400 truncated"
-
-        body = data[pos:pos + length]
-        rest = len(data) - (pos + length)
-
-        return (
-            f'framing: content-length\n'
-            f'body: "{esc(body)}"\n'
-            f'rest: {rest}'
-        )
-
-    return f'framing: none\nbody: ""\nrest: {len(data) - pos}'
-   
+    return response
 
 
 def main():
-    
+    # Read bytes, not text. latin-1 maps one byte to one char, so len() counts bytes.
     data = sys.stdin.buffer.read().decode("latin-1")
-    sys.stdout.write(decode(data) + "\n")
+    method, status, headers, body = parse_spec(data)
+    sys.stdout.buffer.write(render(method, status, headers, body).encode("latin-1"))
+
 
 main()
